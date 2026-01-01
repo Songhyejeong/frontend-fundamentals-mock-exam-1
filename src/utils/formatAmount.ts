@@ -5,7 +5,7 @@ export const formatAmount = (amount: number) => {
   return Number(digits).toLocaleString('ko-KR');
 };
 
-export const parseAmount = (input: number) => {
+export const parseAmount = (input: string) => {
   const digits = input.toString().replace(/[^\d]/g, '');
   if (!digits) return 0;
   return Number.parseInt(digits, 10) || 0;

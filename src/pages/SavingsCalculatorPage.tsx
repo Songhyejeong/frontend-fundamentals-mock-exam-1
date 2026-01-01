@@ -1,7 +1,7 @@
 import SavingsForm from 'components/SavingsForm';
 import SavingProductList from 'components/SavingProductList';
 import CaculateResult from 'components/CaculateResult';
-import NavTab, { TabKey } from 'components/NavTab';
+import NavTab from 'components/NavTab';
 import { useState } from 'react';
 import { Border, NavigationBar, Spacing } from 'tosslib';
 import RecommendProductList from 'components/RecommendProductList';
@@ -10,14 +10,13 @@ export function SavingsCalculatorPage() {
   const [term, setTerm] = useState(12);
   const [goalAmount, setGoalAmount] = useState(0);
   const [monthlyAmount, setMonthlyAmount] = useState(0);
-  const [activeTab, setActiveTab] = useState<TabKey>('products');
+  const [activeTab, setActiveTab] = useState('products');
 
   const [selectedProductId, setSelectedProductId] = useState<string | null>(null);
 
   return (
     <>
       <NavigationBar title="적금 계산기" />
-      <Spacing size={16} />
 
       <SavingsForm
         goalAmount={goalAmount}
@@ -27,10 +26,9 @@ export function SavingsCalculatorPage() {
         onMonthlyAmountChange={setMonthlyAmount}
         onTermChange={setTerm}
       />
-
       <Spacing size={24} />
       <Border height={16} />
-      <Spacing size={8} />
+
       <NavTab value={activeTab} onChange={setActiveTab} />
 
       {activeTab === 'products' && (
