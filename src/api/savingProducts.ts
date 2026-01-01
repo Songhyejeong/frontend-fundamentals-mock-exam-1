@@ -1,16 +1,16 @@
 import { http, isHttpError } from 'tosslib';
-import { UNEXPECTED_ERROR_MESSAGE } from './apiError';
+import { SERVER_ERROR_MESSAGE, UNEXPECTED_ERROR_MESSAGE } from './apiError';
 
- interface SavingsProduct {
+interface SavingsProduct {
   id: string;
   name: string;
-  annualRate: number; 
+  annualRate: number;
   minMonthlyAmount: number;
   maxMonthlyAmount: number;
-  availableTerms: number; 
+  availableTerms: number;
 }
 
- type SavingsProductsResponse = SavingsProduct[];
+type SavingsProductsResponse = SavingsProduct[];
 
 /**
  * 적금 상품 목록을 가져옵니다.
@@ -22,7 +22,7 @@ export const fetchSavingsProducts = async (): Promise<SavingsProduct[] | null> =
     return products;
   } catch (e) {
     if (isHttpError(e)) {
-      console.error(`적금 상품 목록을 불러오는 중 오류가 발생했어요. ${e.message}`);
+      if (e.status >= 500) console.error(SERVER_ERROR_MESSAGE);
     } else {
       console.error(UNEXPECTED_ERROR_MESSAGE, e);
     }
