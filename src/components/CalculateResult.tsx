@@ -8,7 +8,7 @@ interface CaculateResultProps {
   term: number;
 }
 
-function CaculateResult({ selectedProductId, goalAmount, monthlyAmount, term }: CaculateResultProps) {
+function CalculateResult({ selectedProductId, goalAmount, monthlyAmount, term }: CaculateResultProps) {
   const { data: savingProducts } = useSavingsProducts();
 
   const selectedProduct = savingProducts?.find(product => product.id === selectedProductId);
@@ -23,7 +23,7 @@ function CaculateResult({ selectedProductId, goalAmount, monthlyAmount, term }: 
 
   const annualRate = selectedProduct.annualRate;
   const expectedProfit = Math.round(monthlyAmount * term * (1 + annualRate * 0.5));
-  const difference = goalAmount - expectedProfit;
+  const differenceWithGoal = goalAmount - expectedProfit;
   const recommendedMonthly = Math.round(goalAmount / (term * (1 + annualRate * 0.5)) / 1000) * 1000;
 
   return (
@@ -47,7 +47,7 @@ function CaculateResult({ selectedProductId, goalAmount, monthlyAmount, term }: 
             type="2RowTypeA"
             top="목표 금액과의 차이"
             topProps={{ color: colors.grey600 }}
-            bottom={`${difference.toLocaleString()}원`}
+            bottom={`${differenceWithGoal.toLocaleString()}원`}
             bottomProps={{ fontWeight: 'bold', color: colors.blue600 }}
           />
         }
@@ -70,4 +70,4 @@ function CaculateResult({ selectedProductId, goalAmount, monthlyAmount, term }: 
   );
 }
 
-export default CaculateResult;
+export default CalculateResult;

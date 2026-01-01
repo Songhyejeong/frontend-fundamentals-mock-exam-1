@@ -44,7 +44,6 @@ function SavingProductList({
     }
   };
 
-  console.log('selectedId', selectedProductId);
   return (
     <>
       {filteredProductList.map(product => (
