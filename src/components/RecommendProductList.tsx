@@ -1,3 +1,5 @@
+import ErrorLayout from '_common/ErrorLayout';
+import Loading from '_common/Loading';
 import { useSavingsProducts } from 'hooks/query/useSavingProducts';
 import { colors, ListHeader, ListRow, Spacing } from 'tosslib';
 
@@ -7,9 +9,17 @@ interface RecommendProductListProps {
 }
 
 function RecommendProductList({ selectedProductId, setSelectedProductId }: RecommendProductListProps) {
-  const { data: savingProducts } = useSavingsProducts();
+  const { data: savingProducts, isLoading } = useSavingsProducts();
 
-  const filteredRecommendProducts = savingProducts?.sort((a, b) => b.annualRate - a.annualRate).slice(0, 3);
+  if (isLoading) {
+    return <Loading message="추천 적금 상품을 불러오는 중이에요" />;
+  }
+
+  if (!savingProducts || savingProducts.length === 0) {
+    return <ErrorLayout message="적금 상품을 불러올 수 없어요." />;
+  }
+
+  const recommendProducts = savingProducts?.sort((a, b) => b.annualRate - a.annualRate).slice(0, 3);
 
   const handleClickProduct = (productId: string) => {
     if (selectedProductId === productId) {
@@ -26,7 +36,7 @@ function RecommendProductList({ selectedProductId, setSelectedProductId }: Recom
       <ListHeader title={<ListHeader.TitleParagraph fontWeight="bold">추천 상품 목록</ListHeader.TitleParagraph>} />
       <Spacing size={12} />
 
-      {filteredRecommendProducts?.map(product => (
+      {recommendProducts.map(product => (
         <ListRow
           key={product.id}
           contents={
